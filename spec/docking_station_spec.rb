@@ -9,12 +9,10 @@ describe DockingStation do
     # end    
 
     it 'should return the bike' do
-      #Arrange
-      bike = Bike.new
       #Act
-      subject.dock(bike)
+      bike = subject.dock(Bike.new)
       #Assert
-      expect(subject.bike).to eq(bike) 
+      expect(subject.release_bike).to eq(bike) 
     end
 
     it { is_expected.to respond_to(:dock).with(1).argument }
@@ -31,13 +29,14 @@ describe DockingStation do
     end 
 
     it 'raises an error message when there are no bikes' do
+      p @bikes
       expect {subject.release_bike}.to raise_error('No bikes in the station')
 
     end 
 
     describe '#dock' do
         it 'raises an error message when the station is full' do
-        subject.dock(Bike.new)
+        20.times { subject.dock(Bike.new) }
         expect {subject.dock(Bike.new)}.to raise_error('The station is full')
         end
     end 
